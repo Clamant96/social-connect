@@ -4,8 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "mensagem")
@@ -17,6 +20,10 @@ public class Mensagem {
 	
 	@NotNull
 	private String descricao;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("mensagens")
+	private Postagem postagem;
 
 	public long getId() {
 		return id;
@@ -32,6 +39,14 @@ public class Mensagem {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Postagem getPostagem() {
+		return postagem;
+	}
+
+	public void setPostagem(Postagem postagem) {
+		this.postagem = postagem;
 	}
 
 }

@@ -1,13 +1,19 @@
 package br.com.helpconnect.socialConnect.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.URL;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "usuario")
@@ -30,6 +36,10 @@ public class Usuario {
 	private String site;
 	
 	private String biografia;
+	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("usuario")
+	private List<Postagem> postagens;
 
 	public long getId() {
 		return id;
@@ -77,6 +87,14 @@ public class Usuario {
 
 	public void setBiografia(String biografia) {
 		this.biografia = biografia;
+	}
+
+	public List<Postagem> getPostagens() {
+		return postagens;
+	}
+
+	public void setPostagens(List<Postagem> postagens) {
+		this.postagens = postagens;
 	}
 
 }
