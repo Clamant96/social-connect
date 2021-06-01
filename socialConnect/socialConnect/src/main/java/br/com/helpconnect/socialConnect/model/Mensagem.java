@@ -24,6 +24,8 @@ public class Mensagem {
 	@ManyToOne
 	@JsonIgnoreProperties("mensagens")
 	private Postagem postagem;
+	
+	/* PARA O USUARIO RECEBE O ID DE QUEM ESTA LOGADO NO MOMENTO DE ESCREVER A MESAGEM */
 
 	public long getId() {
 		return id;

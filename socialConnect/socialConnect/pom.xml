@@ -29,7 +29,7 @@
 			<version>2.6.1</version>
 		</dependency>
 	
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -37,7 +37,7 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
-		</dependency>
+		</dependency>  -->
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
