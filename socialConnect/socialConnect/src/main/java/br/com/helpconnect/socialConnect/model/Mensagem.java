@@ -25,7 +25,8 @@ public class Mensagem {
 	@JsonIgnoreProperties("mensagens")
 	private Postagem postagem;
 	
-	/* PARA O USUARIO RECEBE O ID DE QUEM ESTA LOGADO NO MOMENTO DE ESCREVER A MESAGEM */
+	@NotNull
+	private String username;
 
 	public long getId() {
 		return id;
@@ -51,4 +52,12 @@ public class Mensagem {
 		this.postagem = postagem;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 }

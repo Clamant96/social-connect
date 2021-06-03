@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.helpconnect.socialConnect.model.Mensagem;
-import br.com.helpconnect.socialConnect.model.Postagem;
 import br.com.helpconnect.socialConnect.repository.MensagemRepository;
-import br.com.helpconnect.socialConnect.service.PostagemService;
 
 @RestController
 @RequestMapping("/mensagens")
@@ -27,9 +25,6 @@ public class MensagemController {
 	
 	@Autowired
 	private MensagemRepository repository;
-	
-	@Autowired
-	private PostagemService service;
 	
 	@GetMapping
 	public ResponseEntity<List<Mensagem>> findAllByMensagens() {
