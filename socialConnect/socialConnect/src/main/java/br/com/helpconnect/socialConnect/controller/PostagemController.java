@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.helpconnect.socialConnect.model.Postagem;
 import br.com.helpconnect.socialConnect.repository.PostagemRepository;
+import br.com.helpconnect.socialConnect.service.PostagemService;
 
 @RestController
 @RequestMapping("/postagens")
@@ -25,6 +26,9 @@ public class PostagemController {
 	
 	@Autowired
 	private PostagemRepository repository;
+	
+	@Autowired
+	private PostagemService service;
 	
 	@GetMapping
 	public ResponseEntity<List<Postagem>> findAllByPostagem() {
@@ -50,6 +54,18 @@ public class PostagemController {
 	public ResponseEntity<Postagem> putPostagem(@RequestBody Postagem postagem) {
 		
 		return ResponseEntity.ok(repository.save(postagem));
+	}
+	
+	@GetMapping("/adicionarlike/{idPostagem}")
+	public ResponseEntity<Postagem> adicionarLike(@PathVariable long idPostagem) {
+		
+		return ResponseEntity.ok(service.adicionarLike(idPostagem));
+	}
+	
+	@GetMapping("/retirarlike/{idPostagem}")
+	public ResponseEntity<Postagem> retirarLike(@PathVariable long idPostagem) {
+		
+		return ResponseEntity.ok(service.retirarLike(idPostagem));
 	}
 	
 	@DeleteMapping
