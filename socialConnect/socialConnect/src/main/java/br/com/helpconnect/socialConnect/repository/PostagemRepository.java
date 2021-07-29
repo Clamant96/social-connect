@@ -7,5 +7,5 @@ import br.com.helpconnect.socialConnect.model.Postagem;
 
 @Repository
 public interface PostagemRepository extends JpaRepository<Postagem, Long> {
-
+	
 }

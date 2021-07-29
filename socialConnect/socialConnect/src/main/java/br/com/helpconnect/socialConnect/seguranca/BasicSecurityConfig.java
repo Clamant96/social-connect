@@ -39,6 +39,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/postagens/{id}").permitAll()
 		.antMatchers("/postagens/adicionarlike/{idPostagem}").permitAll()
 		.antMatchers("/postagens/retirarlike/{idPostagem}").permitAll()
+		.antMatchers("/postagens/likes_usuario_postagem/likePostagem/{idPostagem}/like/{idUsuario}").permitAll()
 		.antMatchers("/usuarios").permitAll()
 		.antMatchers("/usuarios/{id}").permitAll()
 		.antMatchers("/usuarios/username/{username}").permitAll()

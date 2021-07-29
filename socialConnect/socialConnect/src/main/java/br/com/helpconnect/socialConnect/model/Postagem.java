@@ -1,12 +1,17 @@
 package br.com.helpconnect.socialConnect.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -28,15 +33,22 @@ public class Postagem {
 	@NotNull
 	private String descricao;
 	
-	private int likes;
-	
 	@ManyToOne
 	@JsonIgnoreProperties("postagens")
 	private Usuario usuario;
 	
-	@OneToMany(mappedBy = "postagem", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "postagem", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("postagem")
 	private List<Mensagem> mensagens;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+	  name = "likes_usuario_postagem", 
+	  joinColumns = @JoinColumn(name = "postagem_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "usuario_id")
+	  )
+	@JsonIgnoreProperties({"img", "nome", "username", "site", "senha", "biografia", "postagens", "like"})
+	private List<Usuario> likePostagem = new ArrayList<>();
 
 	public long getId() {
 		return id;
@@ -62,14 +74,6 @@ public class Postagem {
 		this.descricao = descricao;
 	}
 
-	public int getLikes() {
-		return likes;
-	}
-
-	public void setLikes(int likes) {
-		this.likes = likes;
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -84,6 +88,14 @@ public class Postagem {
 
 	public void setMensagens(List<Mensagem> mensagens) {
 		this.mensagens = mensagens;
+	}
+
+	public List<Usuario> getLikePostagem() {
+		return likePostagem;
+	}
+
+	public void setLikePostagem(List<Usuario> likePostagem) {
+		this.likePostagem = likePostagem;
 	}
 
 }

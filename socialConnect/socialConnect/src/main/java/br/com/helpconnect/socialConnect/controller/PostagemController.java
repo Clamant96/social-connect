@@ -56,16 +56,19 @@ public class PostagemController {
 		return ResponseEntity.ok(repository.save(postagem));
 	}
 	
-	@GetMapping("/adicionarlike/{idPostagem}")
-	public ResponseEntity<Postagem> adicionarLike(@PathVariable long idPostagem) {
-		
-		return ResponseEntity.ok(service.adicionarLike(idPostagem));
-	}
+	/*
+	 * EXPLICACAO URI:
+	 * 
+	 * 	/likes_usuario_postagem -> nome da tabela associativa que esta no model Postagem
+	 * 	/likePostagem -> Lista de postagens na classes usuario
+	 * 	/like -> Lista de usuarios na classe Postagem
+	 * 
+	 * */
 	
-	@GetMapping("/retirarlike/{idPostagem}")
-	public ResponseEntity<Postagem> retirarLike(@PathVariable long idPostagem) {
+	@PutMapping("/likes_usuario_postagem/likePostagem/{idUsuario}/like/{idPostagem}")
+	public ResponseEntity<Postagem> postLikePostagem(@PathVariable long idPostagem, @PathVariable long idUsuario){
 		
-		return ResponseEntity.ok(service.retirarLike(idPostagem));
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.likePostagem(idPostagem, idUsuario));
 	}
 	
 	@DeleteMapping

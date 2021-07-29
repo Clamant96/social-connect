@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.helpconnect.socialConnect.model.Postagem;
+import br.com.helpconnect.socialConnect.model.Usuario;
 import br.com.helpconnect.socialConnect.repository.PostagemRepository;
+import br.com.helpconnect.socialConnect.repository.UsuarioRepository;
 
 @Service
 public class PostagemService {
@@ -14,33 +16,41 @@ public class PostagemService {
 	@Autowired
 	private PostagemRepository postagemRepository;
 	
-	/* LIKE */
-	/* ADICIONAR LIKE */
-	public Postagem adicionarLike(long idProduto) {
-		Optional<Postagem> postagemExistente = postagemRepository.findById(idProduto);
-		
-		if(postagemExistente.isPresent()) {
-			postagemExistente.get().setLikes(postagemExistente.get().getLikes() + 1);
-			
-			postagemRepository.save(postagemExistente.get());
-		
-		}
-		
-		return postagemRepository.save(postagemExistente.get());
-	}
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
-	/* RETIRAR LIKE */
-	public Postagem retirarLike(long idProduto) {
-		Optional<Postagem> postagemExistente = postagemRepository.findById(idProduto);
+	/* GERENCIAMENTO DE TABELAS ASSOCIATIVAS (MANY-TO-MANY) */
+	public Postagem likePostagem(long idPostagem, long idUsuario) {
 		
-		if(postagemExistente.isPresent() && postagemExistente.get().getLikes() > 0) {
-			postagemExistente.get().setLikes(postagemExistente.get().getLikes() - 1);
+		Optional<Usuario> usuarioExistente = usuarioRepository.findById(idUsuario);
+		Optional<Postagem> postagemExistente = postagemRepository.findById(idPostagem);
+		
+		/* CASO CASO O USUARIO AINDA NAO TENHA DADO LIKE, ENTAO E COMPUTADO UM NOVO LIKE NA POSTAGEM */
+		if(!(postagemExistente.get().getLikePostagem().contains(usuarioExistente.get()))) {
 			
-			postagemRepository.save(postagemExistente.get());
+			if(usuarioExistente.isPresent() && postagemExistente.isPresent()) {
+				postagemExistente.get().getLikePostagem().add(usuarioExistente.get());
+				
+				postagemRepository.save(postagemExistente.get());
+				
+				return postagemRepository.save(postagemExistente.get());
+				
+			}
+			
+		}else {
+			/* CASO CONTRARIO O LIKE DO USUARIO E REMOVIDO DA POSTAGEM */
+			if(usuarioExistente.isPresent() && postagemExistente.isPresent()) {
+				postagemExistente.get().getLikePostagem().remove(usuarioExistente.get());
+				
+				postagemRepository.save(postagemExistente.get());
+				
+				return postagemRepository.save(postagemExistente.get());
+				
+			}
 			
 		}
-		
-		return postagemRepository.save(postagemExistente.get());
+
+		return null;
 	}
 
 }
