@@ -40,6 +40,12 @@ public class MensagemController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
+	@GetMapping("/montagem/{username}")
+	public ResponseEntity<List<Mensagem>> findAllByUsername(@PathVariable String username) {
+		
+		return ResponseEntity.ok(repository.findAllByUsername(username));
+	}
+	
 	@PostMapping
 	public ResponseEntity<Mensagem> postMensagem(@RequestBody Mensagem mensagem) {
 		

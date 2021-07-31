@@ -84,6 +84,20 @@ public class UsuarioController {
 		
 	}
 	
+	@PutMapping("/atualizar")
+	public ResponseEntity<Usuario> update(@RequestBody Usuario usuario) {
+		Optional<Usuario> user = usuarioService.atualizarUsuario(usuario);
+		
+		try {
+			return ResponseEntity.ok(user.get());
+			
+		}catch(Exception e) {
+			return ResponseEntity.badRequest().build();
+			
+		}
+		
+	}
+	
 	@DeleteMapping("/{id}")
 	public void deleteUsuario(@PathVariable long id) {
 		
