@@ -47,7 +47,7 @@ public class Usuario {
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem> postagens;
 	
-	@ManyToMany(mappedBy = "likePostagem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "likePostagem", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({"img", "descricao", "usuario", "mensagens", "likePostagem"})
 	private List<Postagem> like = new ArrayList<>();
 

@@ -41,7 +41,7 @@ public class Postagem {
 	@JsonIgnoreProperties("postagem")
 	private List<Mensagem> mensagens;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JoinTable(
 	  name = "likes_usuario_postagem", 
 	  joinColumns = @JoinColumn(name = "postagem_id"), 
