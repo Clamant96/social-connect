@@ -9,9 +9,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -50,7 +55,22 @@ public class Usuario {
 	@ManyToMany(mappedBy = "likePostagem", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({"img", "descricao", "usuario", "mensagens", "likePostagem"})
 	private List<Postagem> like = new ArrayList<>();
-
+	
+	@OneToOne
+    @MapsId
+    @JoinColumn(name = "seguindo_id")
+	@JsonIgnoreProperties("usuario")
+	private Seguindo seguindo;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(
+	  name = "lista_seguindo",
+	  joinColumns = @JoinColumn(name = "usuario_id"),
+	  inverseJoinColumns = @JoinColumn(name = "seguindo_id")
+	)
+	@JsonIgnoreProperties({"usuario", "listaDeSeguindo"})
+	private List<Seguindo> listaSeguindo = new ArrayList<>();
+	
 	public long getId() {
 		return id;
 	}
@@ -121,6 +141,22 @@ public class Usuario {
 
 	public void setLike(List<Postagem> like) {
 		this.like = like;
+	}
+
+	public Seguindo getSeguindo() {
+		return seguindo;
+	}
+
+	public void setSeguindo(Seguindo seguindo) {
+		this.seguindo = seguindo;
+	}
+
+	public List<Seguindo> getListaSeguindo() {
+		return listaSeguindo;
+	}
+
+	public void setListaSeguindo(List<Seguindo> listaSeguindo) {
+		this.listaSeguindo = listaSeguindo;
 	}
 	
 }

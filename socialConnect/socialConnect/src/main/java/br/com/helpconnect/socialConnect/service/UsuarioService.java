@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.helpconnect.socialConnect.model.Seguindo;
 import br.com.helpconnect.socialConnect.model.UserLogin;
 import br.com.helpconnect.socialConnect.model.Usuario;
+import br.com.helpconnect.socialConnect.repository.SeguindoRepository;
 import br.com.helpconnect.socialConnect.repository.UsuarioRepository;
 
 @Service
@@ -18,6 +20,9 @@ public class UsuarioService {
 	
 	@Autowired
 	private UsuarioRepository repository;
+	
+	@Autowired
+	private SeguindoRepository seguindoRepository;
 
 	public Optional<Usuario> CadastrarUsuario(Usuario usuario) {	
 		
@@ -31,6 +36,18 @@ public class UsuarioService {
 
 		String senhaEncoder = encoder.encode(usuario.getSenha());
 		usuario.setSenha(senhaEncoder);
+		
+		/* INSTANCIA UM NOVA LISTA DE SEGUINDO */
+		Seguindo seguindo = new Seguindo();
+		
+		/* REGISTRA AS NOVAS LISTAS NA BASE DE DADOS */
+		seguindoRepository.save(seguindo);
+		
+		/* ASSOCIA O USUARIO AS NOVAS LISTAS */
+		usuario.setSeguindo(seguindo);
+		
+		/* REGISTRA O USUARIO NA BASE DE DADOS */
+		repository.save(usuario);
 		
 		return Optional.of(repository.save(usuario));
 	}

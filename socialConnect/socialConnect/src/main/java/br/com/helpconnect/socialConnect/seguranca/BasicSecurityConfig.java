@@ -44,6 +44,9 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/usuarios").permitAll()
 		.antMatchers("/usuarios/{id}").permitAll()
 		.antMatchers("/usuarios/username/{username}").permitAll()
+		.antMatchers("/seguindo").permitAll()
+		.antMatchers("/seguindo/{id}").permitAll()
+		.antMatchers("/seguindo/lista_seguindo/{idSeguindo}/seguindo/{idUsuario}").permitAll()
 		// nao deixar acessar os demais endpoints sem estarem com um token
 		.anyRequest().authenticated()
 		// trabalha com uma seguranca basica
