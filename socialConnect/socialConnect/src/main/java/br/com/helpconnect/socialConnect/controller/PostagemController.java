@@ -77,7 +77,7 @@ public class PostagemController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.likePostagem(idPostagem, idUsuario));
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	public void deletePostagem(@PathVariable long id) {
 		
 		repository.deleteById(id);

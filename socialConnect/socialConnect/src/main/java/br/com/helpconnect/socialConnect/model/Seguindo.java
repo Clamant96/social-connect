@@ -37,7 +37,7 @@ public class Seguindo {
 	private Usuario usuario;
 	
 	@ManyToMany(mappedBy = "listaSeguindo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnoreProperties({"img", "nome", "username", "site", "senha", "biografia", "postagens", "like", "seguindo", "listaSeguindo"})
+	@JsonIgnoreProperties({"img", "nome", "username", "site", "senha", "biografia", "postagens", "like", "seguindo", "listaSeguindo", "storys"})
 	private List<Usuario> listaDeSeguindo = new ArrayList<>();
 
 	public long getId() {

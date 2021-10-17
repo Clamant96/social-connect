@@ -47,7 +47,7 @@ public class Postagem {
 	  joinColumns = @JoinColumn(name = "postagem_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "usuario_id")
 	  )
-	@JsonIgnoreProperties({"img", "nome", "username", "site", "senha", "biografia", "postagens", "like", "seguindo", "listaSeguindo"})
+	@JsonIgnoreProperties({"img", "nome", "username", "site", "senha", "biografia", "postagens", "like", "seguindo", "listaSeguindo", "storys"})
 	private List<Usuario> likePostagem = new ArrayList<>();
 
 	public long getId() {

@@ -71,6 +71,10 @@ public class Usuario {
 	@JsonIgnoreProperties({"usuario", "listaDeSeguindo"})
 	private List<Seguindo> listaSeguindo = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("usuario")
+	private List<Story> storys;
+	
 	public long getId() {
 		return id;
 	}
@@ -157,6 +161,14 @@ public class Usuario {
 
 	public void setListaSeguindo(List<Seguindo> listaSeguindo) {
 		this.listaSeguindo = listaSeguindo;
+	}
+
+	public List<Story> getStorys() {
+		return storys;
+	}
+
+	public void setStorys(List<Story> storys) {
+		this.storys = storys;
 	}
 	
 }
