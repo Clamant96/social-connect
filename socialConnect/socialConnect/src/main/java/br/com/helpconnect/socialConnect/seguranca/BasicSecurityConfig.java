@@ -2,6 +2,7 @@ package br.com.helpconnect.socialConnect.seguranca;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,7 +32,15 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// liberar edpoints para poderem ser acessados sem a necessidade de um token
 		http.authorizeRequests()
+		.antMatchers("/**").permitAll()
 		.antMatchers("/usuarios/logar").permitAll()
+		.antMatchers("/usuarios/cadastrar").permitAll()
+		.antMatchers(HttpMethod.GET, "/usuarios").permitAll()
+		.antMatchers(HttpMethod.GET, "/mensagens").permitAll()
+		.antMatchers(HttpMethod.GET, "/postagens").permitAll()
+		.antMatchers(HttpMethod.GET, "/seguindo").permitAll()
+		
+		/*.antMatchers("/usuarios/logar").permitAll()
 		.antMatchers("/usuarios/cadastrar").permitAll()
 		.antMatchers("/usuarios/atualizar").permitAll()
 		.antMatchers("/mensagens").permitAll()
@@ -46,7 +55,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/usuarios/username/{username}").permitAll()
 		.antMatchers("/seguindo").permitAll()
 		.antMatchers("/seguindo/{id}").permitAll()
-		.antMatchers("/seguindo/lista_seguindo/{idSeguindo}/seguindo/{idUsuario}").permitAll()
+		.antMatchers("/seguindo/lista_seguindo/{idSeguindo}/seguindo/{idUsuario}").permitAll()*/
 		// nao deixar acessar os demais endpoints sem estarem com um token
 		.anyRequest().authenticated()
 		// trabalha com uma seguranca basica
