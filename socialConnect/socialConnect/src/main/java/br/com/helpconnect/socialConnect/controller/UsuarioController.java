@@ -55,6 +55,18 @@ public class UsuarioController {
 		
 		return ResponseEntity.ok(postagemService.storysSeguidores(id));
 	}
+
+	@GetMapping("/usuarios-para-seguidor/{id}")
+	public ResponseEntity<List<Usuario>> findByUsuariosparaSeguir(@PathVariable long id) {
+		
+		return ResponseEntity.ok(postagemService.usuariosParaSeguir(id));
+	}
+
+	@GetMapping("/usuarios-seguidos/{id}")
+	public ResponseEntity<List<Usuario>> findByUsuariosSeguidos(@PathVariable long id) {
+		
+		return ResponseEntity.ok(postagemService.usuariosSeguidos(id));
+	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> findByIdUsuario(@PathVariable long id) {

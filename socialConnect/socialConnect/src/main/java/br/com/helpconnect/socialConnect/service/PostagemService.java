@@ -165,4 +165,63 @@ public class PostagemService {
 		return listaStorys;
 	}
 
+	public List<Usuario> usuariosParaSeguir(long idUsuario) {
+
+		Optional<Usuario> usuarioExistente = usuarioRepository.findById(idUsuario);
+
+		// CASO A LISTA DO USUARIO ESTEJA VAZIA, E RETORNAR TODOS OS USUARIOS 
+		if(usuarioExistente.get().getListaSeguindo().size() == 0) {
+
+			List<Usuario> memoriaUsuarios = new ArrayList<>();
+			
+			// REMOVE O USUARIO LOGADO DA RELACAO
+			for (Usuario usuario : usuarioRepository.findAll()) {
+
+				if(usuario.getId() != usuarioExistente.get().getId()) {
+					memoriaUsuarios.add(usuario);
+
+				}
+
+			}
+
+			return memoriaUsuarios;
+		}
+
+		
+		// INSTANCIA UMA NOVA LISTA DE USUARIOS
+		List<Usuario> listaUsuarios = usuarioRepository.findAll();
+		
+		// NAVEGA NO ARRAY DE LISTA DE USUARIO SEGUIDOS PELO USUARIO LOGADO
+		for (Seguindo usuario : usuarioExistente.get().getListaSeguindo()) {
+				
+			// CASO O USUARIO JA ESTEJA SENDO SEGUIDO, ELE E RETIRADO DA LISTA DE RECOMENDACOES
+			listaUsuarios.remove(usuario.getUsuario());
+			
+		}
+
+		// REMOVE O USUARIO LOGADO
+		listaUsuarios.remove(usuarioExistente.get());
+
+		return listaUsuarios;
+	}
+
+	public List<Usuario> usuariosSeguidos(long id) {
+
+		// CAPTURA OS DADOS DO USUARIO LOGADO
+		Optional<Usuario> usuarioExistete = usuarioRepository.findById(id);
+
+		// INSTANCIA UMA LISTA DE USUARIO SEGUIDOS PELO USUARIO LOGADO
+		List<Usuario> listaUsuariosSeguidos = new ArrayList<>();
+
+		// NAVEGA NA LISTA DE USUARIO SEGUIDOS PELO USUARIO LOGADO
+		for (Seguindo usuarioSeguido : usuarioExistete.get().getListaSeguindo()) {
+			
+			// INSERE O OBJ DO USUARIO SEGUIDO DENTRO DA LISTA
+			listaUsuariosSeguidos.add(usuarioRepository.findById(usuarioSeguido.getId()).get());
+
+		}
+
+		return listaUsuariosSeguidos;
+	}
+
 }
