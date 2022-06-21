@@ -1,5 +1,7 @@
 package br.com.helpconnect.socialConnect.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import br.com.helpconnect.socialConnect.model.Postagem;
 import br.com.helpconnect.socialConnect.model.Seguindo;
+import br.com.helpconnect.socialConnect.model.Story;
 import br.com.helpconnect.socialConnect.model.Usuario;
 import br.com.helpconnect.socialConnect.repository.PostagemRepository;
 import br.com.helpconnect.socialConnect.repository.SeguindoRepository;
+import br.com.helpconnect.socialConnect.repository.StoryRepository;
 import br.com.helpconnect.socialConnect.repository.UsuarioRepository;
 
 @Service
@@ -23,6 +27,9 @@ public class PostagemService {
 	
 	@Autowired
 	private SeguindoRepository seguindoRepository;
+
+	@Autowired
+	private StoryRepository storyRepository;
 	
 	/* GERENCIAMENTO DE TABELAS ASSOCIATIVAS (MANY-TO-MANY) */
 	public Postagem likePostagem(long idPostagem, long idUsuario) {
@@ -96,6 +103,66 @@ public class PostagemService {
 		}
 
 		return null;
+	}
+
+	public List<Postagem> postagensSeguidores(long idUsuario) {
+
+		List<Postagem> listaPostagens = new ArrayList<>();
+		Optional<Seguindo> usuarioExistente = seguindoRepository.findById(idUsuario);
+
+		// NAVEGA NO ARRAY DE STORYs
+		for (Postagem postagem : postagemRepository.findAll()) {
+
+			// NAVEGA NO ARRAY DE SEGUIDORES
+			for (Usuario usuario : postagem.getUsuario().getSeguindo().getListaDeSeguindo()) {
+				
+				// INSERE NO ARRAY CASO O USUARIO SIGA A PESSOA
+				if(usuario.getId() == usuarioExistente.get().getId()) {
+					listaPostagens.add(postagem);
+
+				}
+				
+			}
+
+			// INSERE NO ARRAY CASO A POSTAGEM SEJA DO PROPRIO USUARIO
+			if(postagem.getUsuario().getId() == usuarioExistente.get().getId()) {
+				listaPostagens.add(postagem);
+
+			}
+			
+		}
+		
+		return listaPostagens;
+	}
+
+	public List<Story> storysSeguidores(long idUsuario) {
+
+		List<Story> listaStorys = new ArrayList<>();
+		Optional<Seguindo> usuarioExistente = seguindoRepository.findById(idUsuario);
+
+		// NAVEGA NO ARRAY DE STORYs
+		for (Story postagem : storyRepository.findAll()) {
+
+			// NAVEGA NO ARRAY DE SEGUIDORES
+			for (Usuario usuario : postagem.getUsuario().getSeguindo().getListaDeSeguindo()) {
+				
+				// INSERE NO ARRAY CASO O USUARIO SIGA A PESSOA
+				if(usuario.getId() == usuarioExistente.get().getId()) {
+					listaStorys.add(postagem);
+
+				}
+				
+			}
+
+			// INSERE NO ARRAY CASO A POSTAGEM SEJA DO PROPRIO USUARIO
+			if(postagem.getUsuario().getId() == usuarioExistente.get().getId()) {
+				listaStorys.add(postagem);
+				
+			}
+			
+		}
+		
+		return listaStorys;
 	}
 
 }

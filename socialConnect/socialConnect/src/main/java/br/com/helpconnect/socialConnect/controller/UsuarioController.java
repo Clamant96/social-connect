@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.helpconnect.socialConnect.model.Postagem;
+import br.com.helpconnect.socialConnect.model.Story;
 import br.com.helpconnect.socialConnect.model.UserLogin;
 import br.com.helpconnect.socialConnect.model.Usuario;
 import br.com.helpconnect.socialConnect.repository.UsuarioRepository;
+import br.com.helpconnect.socialConnect.service.PostagemService;
 import br.com.helpconnect.socialConnect.service.UsuarioService;
 
 @RestController
@@ -31,11 +34,26 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+
+	@Autowired
+	private PostagemService postagemService;
 	
 	@GetMapping
 	public ResponseEntity<List<Usuario>> findAllByUsuario() {
 		
 		return ResponseEntity.ok(repository.findAll());
+	}
+
+	@GetMapping("/postagens-seguidores/{id}")
+	public ResponseEntity<List<Postagem>> findByPostagensSeguidores(@PathVariable long id) {
+		
+		return ResponseEntity.ok(postagemService.postagensSeguidores(id));
+	}
+
+	@GetMapping("/storys-seguidores/{id}")
+	public ResponseEntity<List<Story>> findByStorysSeguidores(@PathVariable long id) {
+		
+		return ResponseEntity.ok(postagemService.storysSeguidores(id));
 	}
 	
 	@GetMapping("/{id}")
