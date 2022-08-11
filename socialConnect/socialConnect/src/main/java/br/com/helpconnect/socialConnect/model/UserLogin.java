@@ -18,6 +18,8 @@ public class UserLogin {
 	
 	private String site;
 
+	private String email;
+
 	public String getNome() {
 		return nome;
 	}
@@ -80,6 +82,14 @@ public class UserLogin {
 
 	public void setSite(String site) {
 		this.site = site;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

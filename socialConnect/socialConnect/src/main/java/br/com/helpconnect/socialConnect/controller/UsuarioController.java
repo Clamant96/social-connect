@@ -22,6 +22,7 @@ import br.com.helpconnect.socialConnect.model.UserLogin;
 import br.com.helpconnect.socialConnect.model.Usuario;
 import br.com.helpconnect.socialConnect.repository.UsuarioRepository;
 import br.com.helpconnect.socialConnect.service.PostagemService;
+import br.com.helpconnect.socialConnect.service.SendMailService;
 import br.com.helpconnect.socialConnect.service.UsuarioService;
 
 @RestController
@@ -37,6 +38,9 @@ public class UsuarioController {
 
 	@Autowired
 	private PostagemService postagemService;
+	
+	@Autowired
+	private SendMailService sendMailService;
 	
 	@GetMapping
 	public ResponseEntity<List<Usuario>> findAllByUsuario() {
@@ -79,7 +83,15 @@ public class UsuarioController {
 	@GetMapping("/username/{username}")
 	public ResponseEntity<List<Usuario>> findByIdNomeUsuario(@PathVariable String username) {
 		
+		System.out.println(usuarioService.ConverterSenhaUsuario("$2a$10$FcdIZwXPbf1OAqyQIwuFjuy2JVtmkuut5sEohq4ZCsTTIt5ztS3pS"));
+		
 		return ResponseEntity.ok(repository.findAllByUsernameContainingIgnoreCase(username));
+	}
+	
+	@PostMapping("/email")
+	public ResponseEntity<Boolean> enviarEmail(@RequestBody Usuario usuario) {
+		
+		return ResponseEntity.ok(sendMailService.sendMail(usuario));
 	}
 	
 	@PostMapping

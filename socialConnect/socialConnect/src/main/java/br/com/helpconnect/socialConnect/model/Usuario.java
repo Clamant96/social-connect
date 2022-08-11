@@ -45,6 +45,8 @@ public class Usuario {
 	private String senha;
 	
 	private String biografia;
+
+	private String email;
 	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
@@ -167,6 +169,14 @@ public class Usuario {
 
 	public void setStorys(List<Story> storys) {
 		this.storys = storys;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

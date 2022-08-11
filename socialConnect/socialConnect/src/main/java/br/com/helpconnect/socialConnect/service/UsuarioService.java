@@ -72,6 +72,7 @@ public class UsuarioService {
 				user.get().setUsername(usuario.get().getUsername());
 				user.get().setSite(usuario.get().getSite());
 				user.get().setBiografia(usuario.get().getBiografia());
+				user.get().setEmail(usuario.get().getEmail());
 
 				return user;
 
@@ -87,6 +88,16 @@ public class UsuarioService {
 		usuario.setSenha(senhaEncoder);
 		
 		return Optional.of(repository.save(usuario));
+	}
+	
+	public String ConverterSenhaUsuario(String senha) {
+		
+		byte[] decodedAuth = Base64.decodeBase64(senha);
+		String authHeader = new String(decodedAuth);
+		
+		System.out.println("SENHA: "+ authHeader);
+		
+		return authHeader;
 	}
 	
 }
