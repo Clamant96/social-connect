@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -133,5 +134,33 @@ public class FileUploadController {
 	public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
 		return ResponseEntity.notFound().build();
 	}
+	
+	@DeleteMapping("/{username}/nomeArquivo/{nomeArquivo}")
+	public boolean deletaImagemSubstituida(@PathVariable("username") String username, @PathVariable("nomeArquivo") String nomeArquivo) {
+		
+		try {
+			String caminho = "C:\\Users\\kevin\\Desktop\\arquivosUpload\\";
+			
+			System.out.println(caminho + username +"\\"+ nomeArquivo);
+			
+			File f= new File(caminho + username +"\\"+ nomeArquivo);
+			
+			if(f.delete()) {  
+				System.out.println(f.getName() + " deleted");
+				
+				return true;
+			}else{  
+				System.out.println("failed");  
+				
+				return false;
+			}  
+		
+		}catch(Exception e){  
+			e.printStackTrace();  
+			
+			return false;
+		}  
+		
+	} 
 
 }
