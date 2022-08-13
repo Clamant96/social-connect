@@ -22,7 +22,7 @@ public class ImageController {
 	@GetMapping("/carregar/{usuario}/{imagem}")
 	public ResponseEntity<byte[]> visualizarImagem(@PathVariable String usuario, @PathVariable String imagem) throws IOException {
 		
-		System.out.println("C:\\Users\\kevin\\Desktop\\arquivosUpload\\"+ usuario +"\\"+ imagem);
+		// System.out.println("C:\\Users\\kevin\\Desktop\\arquivosUpload\\"+ usuario +"\\"+ imagem);
 		
 		InputStream initialStream = new FileInputStream(new File("C:\\Users\\kevin\\Desktop\\arquivosUpload\\"+ usuario +"\\"+ imagem));
 		

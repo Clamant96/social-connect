@@ -141,7 +141,7 @@ public class FileUploadController {
 		try {
 			String caminho = "C:\\Users\\kevin\\Desktop\\arquivosUpload\\";
 			
-			System.out.println(caminho + username +"\\"+ nomeArquivo);
+			// System.out.println(caminho + username +"\\"+ nomeArquivo);
 			
 			File f= new File(caminho + username +"\\"+ nomeArquivo);
 			
