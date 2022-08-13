@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.helpconnect</groupId>
-	<artifactId>LojaVirtual</artifactId>
+	<artifactId>SocialConnect</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>LojaVirtual</name>
+	<name>SocialConnect</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>

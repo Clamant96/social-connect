@@ -1,5 +1,6 @@
 package br.com.helpconnect.socialConnect.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -63,7 +64,11 @@ public class FileUploadController {
 			storageService.store(file);
 			redirectAttributes.addFlashAttribute("message",
 					"You successfully uploaded " + file.getOriginalFilename() + "!");
-
+			
+			file.transferTo(new File("C:\\Users\\kevin\\Desktop\\arquivosUpload\\"+ file.getOriginalFilename()));
+			
+			//System.out.println(System.getProperty("user.dir") +"\\src\\main\\resources\\uploads");
+			
 			// return "redirect:/";
 			return true;
 		}catch(Exception ex) {
