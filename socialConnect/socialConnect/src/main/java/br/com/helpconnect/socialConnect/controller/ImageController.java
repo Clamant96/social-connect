@@ -24,7 +24,7 @@ public class ImageController {
 		
 		// System.out.println("C:\\Users\\kevin\\Desktop\\arquivosUpload\\"+ usuario +"\\"+ imagem);
 		
-		InputStream initialStream = new FileInputStream(new File("C:\\Users\\kevin\\Desktop\\arquivosUpload\\"+ usuario +"\\"+ imagem));
+		InputStream initialStream = new FileInputStream(new File("/home/kevin/aplicacoes/arquivosUpload/"+ usuario +"/"+ imagem));
 		
 		byte[] imageBytes = StreamUtils.copyToByteArray(initialStream);
 		
